@@ -1,0 +1,76 @@
+# Path: app.py
+from flask import Flask,render_template,request #is used to import the flask library.
+import pandas as pd #is used because it allows us to organize data in a tabular form and attach a descriptive index to each row and column.
+import numpy as np #is used for working with arrays.
+import seaborn as sns #is used for data visualization and plotting graphs.
+import matplotlib.pyplot as plt #is usedd for data visualization and plotting graphs.
+from sklearn.model_selection import train_test_split #is used to split the data into training and testing sets.
+from sklearn.metrics import accuracy_score #is used to measure the accuracy of the model.
+from sklearn.metrics import classification_report #is used to measure the quality of predictions from a classification algorithm.
+import re #is used to work with regular expressions.
+import string #is used to work with string data.
+import pickle #is used to save the model.
+
+app=Flask(__name__)#is used to create an instance of the flask class.
+
+@app.route('/')#is used to route the URL to the function.
+def home():
+    return render_template('home.html')
+
+@app.route('/predict',methods=['POST'])#is used to route the URL to the function.
+def predict():
+    df=pd.read_csv("news.csv")
+    df=df.drop(["Unnamed: 0"],axis=1)
+    df=df.sample(frac=1)
+    df.reset_index(inplace=True)
+    df.drop(["index"],axis=1,inplace=True)
+    df["text"]=df["text"].apply(wordopt)
+    x=df["text"]
+    y=df["class"]
+    vectorization=TfidfVectorizer()
+    xv=vectorization.fit_transform(x)
+    x_train,x_test,y_train,y_test=train_test_split(xv,y,test_size=0.25)
+    LR=LogisticRegression()
+    LR.fit(x_train,y_train)
+    pred_LR=LR.predict(x_test)
+    LR.score(x_test,y_test)
+    if request.method=='POST':
+        message=request.form['message']
+        data=[message]
+        vect=vectorization.transform(data).toarray()
+        my_prediction=LR.predict(vect)
+    return render_template('result.html',prediction=my_prediction)
+
+if __name__=='__main__':
+    
+    app.run(debug=True)
+    
+# Path: templates/home.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+</head>
+<body>
+    <h1>Home Page</h1>
+    <form action="{{ url_for('predict')}}" method="post">
+        <label for="message">Enter the news:</label>
+        <input type="text" name="message" id="message">
+        <input type="submit" value="Predict">
+    </form>
+</body>
+</html>
+
+# Path: templates/result.html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+    <h1>Result Page</h1>
+    <h2>{{prediction}}</h2>
+</body>
+</html>
