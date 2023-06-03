@@ -21,5 +21,14 @@ The dataset is taken from Kaggle. It contains 20,800 news articles, each labeled
 | Random Forest | 0.98 |
 | K'Nearest Neighbors | 0.69 |
 
+## Training the Model on the Dataset
+
+1. Training Accuracy of Logistic Regression is:  0.9910571038089013
+2. Training Accuracy of Random Forest Classifier is:  1.0
+3. Training Accuracy of KNN Classifier is:  0.7312674549884128
+4. Training Accuracy of Hybrid Model of Logistic Regression and Random Forest Classifier is:  0.975874977717036
+
+## Testing the Model on the Dataset
+
 ## Dynamic Interface
 ![Fake-News-Detection](DynamicSystem.png)
