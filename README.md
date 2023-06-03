@@ -22,4 +22,4 @@ The dataset is taken from Kaggle. It contains 20,800 news articles, each labeled
 | K'Nearest Neighbors | 0.69 |
 
 ## Dynamic Interface
-![Fake-News-Detection](DynamicSystem.png)
+![Fake-News-Detection](DynamicSystem.png( {width=40px height=40px}))
