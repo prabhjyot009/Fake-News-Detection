@@ -20,7 +20,7 @@ The dataset is taken from Kaggle. It contains 20,800 news articles, each labeled
 | Linear Regression | 0.98 |
 | Random Forest | 0.98 |
 | K'Nearest Neighbors | 0.69 |
-
+![Fake-News-Detection](output.png)
 ## Training the Model on the Dataset
 
 1. Training Accuracy of Logistic Regression is:  0.9910571038089013
